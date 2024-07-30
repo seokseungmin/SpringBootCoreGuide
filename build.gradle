@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.2'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'jacoco'
 }
 
 group = 'com.springboot'
@@ -33,9 +34,48 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // 테스트 후에 JaCoCo 리포트를 생성하도록 설정
 }
+
+jacoco {
+    toolVersion = "0.8.8" // 원하는 JaCoCo 버전 지정
+}
+
+jacocoTestReport {
+    dependsOn test // 테스트 후에 리포트가 생성되도록 설정
+
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        csv.required.set(false)
+
+        html.outputLocation.set(file("jacoco/jacocoHtml"))
+        xml.outputLocation.set(file("jacoco/jacoco.xml"))
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn test // 테스트 후에 커버리지 검증이 수행되도록 설정
+
+    violationRules {
+        rule {
+            element = 'CLASS' // class 단위로 룰을 체크합니다.
+
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.60
+            }
+
+            excludes = ['com.springboot.jpa.data.dao.impl.ProductDAOImpl'] // 이 줄을 추가하여 예외 처리
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification // 커버리지 검증을 빌드 프로세스에 포함

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jpa</a> &gt; <a href="index.source.html" class="el_package">com.springboot.jpa.data.controller</a> &gt; <span class="el_source">ProductController.java</span></div><h1>ProductController.java</h1><pre class="source lang-java linenums">package com.springboot.jpa.data.controller;
+
+import com.springboot.jpa.data.dto.ChangeProductNameDto;
+import com.springboot.jpa.data.dto.ProductDto;
+import com.springboot.jpa.data.dto.ProductResponseDto;
+import com.springboot.jpa.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(&quot;/product&quot;)
+public class ProductController {
+
+    private final ProductService productService;
+
+<span class="fc" id="L20">    public ProductController(ProductService productService) {</span>
+<span class="fc" id="L21">        this.productService = productService;</span>
+<span class="fc" id="L22">    }</span>
+
+    @Operation(summary = &quot;Get product by number&quot;, description = &quot;�긽�뭹 踰덊샇濡� �긽�뭹�쓣 議고쉶�빀�땲�떎.&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;�젙�긽�쟻�쑝濡� 議고쉶�릺�뿀�뒿�땲�떎.&quot;),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;�긽�뭹�쓣 李얠쓣 �닔 �뾾�뒿�땲�떎.&quot;)
+    })
+    @GetMapping
+    public ResponseEntity&lt;ProductResponseDto&gt; getProduct(@RequestParam Long number) {
+<span class="fc" id="L31">        ProductResponseDto productResponseDto = productService.getProduct(number);</span>
+<span class="fc" id="L32">        return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);</span>
+    }
+
+    @Operation(summary = &quot;Create a new product&quot;, description = &quot;�깉濡쒖슫 �긽�뭹�쓣 �깮�꽦�빀�땲�떎.&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;�젙�긽�쟻�쑝濡� �깮�꽦�릺�뿀�뒿�땲�떎.&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;�옒紐삳맂 �슂泥��엯�땲�떎.&quot;)
+    })
+    @PostMapping
+    public ResponseEntity&lt;ProductResponseDto&gt; createProduct(@RequestBody ProductDto productDto) {
+<span class="fc" id="L42">        ProductResponseDto productResponseDto = productService.saveProduct(productDto);</span>
+<span class="fc" id="L43">        return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);</span>
+    }
+
+    @Operation(summary = &quot;Change product name&quot;, description = &quot;�긽�뭹�쓽 �씠由꾩쓣 蹂�寃쏀빀�땲�떎.&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;�젙�긽�쟻�쑝濡� 蹂�寃쎈릺�뿀�뒿�땲�떎.&quot;),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;�긽�뭹�쓣 李얠쓣 �닔 �뾾�뒿�땲�떎.&quot;)
+    })
+    @PutMapping
+    public ResponseEntity&lt;ProductResponseDto&gt; changeProductName(@RequestBody ChangeProductNameDto changeProductNameDto) throws Exception {
+<span class="nc" id="L53">        ProductResponseDto productResponseDto = productService.changeProductName(changeProductNameDto.getNumber(), changeProductNameDto.getName());</span>
+<span class="nc" id="L54">        return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);</span>
+    }
+
+    @Operation(summary = &quot;Delete product by number&quot;, description = &quot;�긽�뭹 踰덊샇濡� �긽�뭹�쓣 �궘�젣�빀�땲�떎.&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;�젙�긽�쟻�쑝濡� �궘�젣�릺�뿀�뒿�땲�떎.&quot;),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;�긽�뭹�쓣 李얠쓣 �닔 �뾾�뒿�땲�떎.&quot;)
+    })
+    @DeleteMapping
+    public ResponseEntity&lt;String&gt; deleteProduct(@RequestParam Long number) throws Exception {
+<span class="nc" id="L64">        productService.deleteProduct(number);</span>
+<span class="nc" id="L65">        return ResponseEntity.status(HttpStatus.OK).body(&quot;�젙�긽�쟻�쑝濡� �궘�젣�릺�뿀�뒿�땲�떎.&quot;);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
