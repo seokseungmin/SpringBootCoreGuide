@@ -20,6 +20,10 @@
 ## 📖 API Documentation 
 ### [Swagger로 API 테스트](http://localhost:8080/swagger-ui/index.html)
 
+|Swagger|
+|------|
+![swagger](https://github.com/user-attachments/assets/afe93fdc-4005-4f0b-a99a-09937cf243b9)
+
 
 ### 🔐 /product
 
@@ -117,3 +121,10 @@
 </details>
 
 ## 🚦Jacoco 실행화면
+
+| test | jacocoTestReport |
+|------|------------------|
+| <img src="https://github.com/user-attachments/assets/b08a1c0f-3d84-4ed6-940c-c5de990d03a1" width="400"> | <img src="https://github.com/user-attachments/assets/a4e5a717-f3fe-46d4-be79-92dfeb76e7b5" width="400"> |
+| jacocoTestCoverageVerification | 테스트 커버리지 |
+| <img src="https://github.com/user-attachments/assets/850125a1-c8d5-4a7c-955b-c336e9b1032e" width="400"> | <img src="src/images/jacoco.png" width="400"> |
+
