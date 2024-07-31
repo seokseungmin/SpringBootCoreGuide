@@ -13,7 +13,7 @@
 - 🌱 **Spring Boot 3.3.2**
 
 - ## 🧰 Tech Stack
-- **Frameworks & Libraries**: Spring Boot, Spring Security, Spring Data JPA, Spring Web, Spring Configuration Processor
+- **Frameworks & Libraries**: Spring Boot, Spring Data JPA, Spring Web, Spring Configuration Processor
 - **Databases**: H2, MariaDB
 - **Utilities**: Lombok, Logback, Swagger, Jacoco
 
